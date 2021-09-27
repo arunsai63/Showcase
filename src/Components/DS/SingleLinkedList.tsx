@@ -119,12 +119,63 @@ class SingleLinkedList extends Component<IProps, IState> {
             })
         }
     }
+
+    deleteByIndex = (index: number) => {
+        if (this.state.head === null) {
+            return alert("list is empty")
+        }
+        let temp = this.state.head
+        let temp2: Node | null = null
+        let count = 0
+
+        if (index === 0) {
+            return this.deleteStart()
+        }
+
+        while (temp.next !== null) {
+            temp2 = temp
+            temp = temp.next
+            ++count
+            if (count === index) {
+                break
+            }
+        }
+
+        if (temp2 !== null) {
+            temp2.next = temp !== null ? temp.next : null
+            this.reload()
+        } else {
+            this.setState({
+                head: null
+            })
+        }
+    }
     // algorithm methods end
 
-    renderNode = (data: number) => {
-        return <li className="list-group-item">
-            {data}
-        </li>
+    renderNode = (data: number, index: number) => {
+        return (
+            <>
+                {index !== 0 && <li className="list-group-item" style={{ border: "none" }}>
+                    {"->"}
+                </li>}
+                <li className="list-group-item" style={{ borderLeftWidth: "1px" }}>
+                    <div onMouseOver={() => {
+                        var ele = document.getElementById(`ll_${index}`)
+                        if (ele) {
+                            ele.style.display = "inline-block"
+                        }
+                    }} onMouseLeave={() => {
+                        var ele = document.getElementById(`ll_${index}`)
+                        if (ele) {
+                            ele.style.display = "none"
+                        }
+                    }}>
+                        {data}
+                        <button id={`ll_${index}`} className="btn-sm btn-danger" style={{ display: "none" }} onClick={() => this.deleteByIndex(index)}>Delete</button>
+                    </div>
+                </li>
+            </>
+        )
     }
 
     render() {
@@ -164,7 +215,7 @@ class SingleLinkedList extends Component<IProps, IState> {
                     {
                         arr.length
                             ? arr.map(this.renderNode)
-                            : <li className="list-group-item">no data</li>
+                            : <li className="list-group-item list-group-item-dark">no data</li>
                     }
                 </ul>
             </div>

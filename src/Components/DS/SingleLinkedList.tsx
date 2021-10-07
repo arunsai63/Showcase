@@ -6,7 +6,7 @@ interface IProps {
 
 interface IState {
     head: Node | null,
-    data: number | null,
+    txtData: number | null,
     key: number //to force reload the component
 }
 
@@ -25,7 +25,7 @@ class SingleLinkedList extends Component<IProps, IState> {
         super(props)
         this.state = {
             head: null,
-            data: 1,
+            txtData: 1,
             key: Date.now()
         }
     }
@@ -40,12 +40,12 @@ class SingleLinkedList extends Component<IProps, IState> {
     clear = () => {
         this.setState({
             head: null,
-            data: 1
+            txtData: 1
         })
     }
 
     addNode = () => {
-        if (this.state.data === null) {
+        if (this.state.txtData === null) {
             alert('data cant be empty')
             return
         }
@@ -53,32 +53,32 @@ class SingleLinkedList extends Component<IProps, IState> {
         let temp = this.state.head
         if (temp === null) {
             this.setState({
-                head: new Node(this.state.data),
-                data: this.state.data + 1
+                head: new Node(this.state.txtData),
+                txtData: this.state.txtData + 1
             })
             return
         }
         while (temp.next !== null) {
             temp = temp?.next
         }
-        temp.next = new Node(this.state.data)
+        temp.next = new Node(this.state.txtData)
         this.setState({
-            data: this.state.data + 1
+            txtData: this.state.txtData + 1
         })
     }
 
     addNodeStart = () => {
-        if (this.state.data === null) {
+        if (this.state.txtData === null) {
             alert('data cant be empty')
             return
         }
 
-        let temp = new Node(this.state.data)
+        let temp = new Node(this.state.txtData)
         temp.next = this.state.head
 
         this.setState({
             head: temp,
-            data: this.state.data + 1
+            txtData: this.state.txtData + 1
         })
     }
 
@@ -196,10 +196,10 @@ class SingleLinkedList extends Component<IProps, IState> {
                 <div className="form-row mt-4">
                     <div className="col-auto my-1">
                         <input type="number" name="data" id="data" placeholder="enter node" className="custom-control-input ml-2"
-                            value={this.state.data ?? ""} onChange={
+                            value={this.state.txtData ?? ""} onChange={
                                 (e: React.ChangeEvent<HTMLInputElement>) => {
                                     this.setState({
-                                        data: parseInt(e.currentTarget.value ? e.currentTarget.value : '0')
+                                        txtData: parseInt(e.currentTarget.value ? e.currentTarget.value : '0')
                                     })
                                 }} />
                         <button className="btn btn-primary mx-4" onClick={this.addNode}>Add</button>

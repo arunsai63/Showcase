@@ -14,7 +14,7 @@ class App extends Component {
 	render() {
 		return (
 			<>
-				<Bro>
+				<Bro basename='/Showcase'>
 					<NavBar />
 					<Switch>
 						<Route exact path="/">
